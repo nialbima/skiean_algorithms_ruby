@@ -1,3 +1,7 @@
+# give an algorithm that returns true if a string contains properly nested and
+# balanced parentheses, and false otherwise.
+# bonus points for the index.
+
 def check_parens_balance(str)
   stack = []
   bad_index = nil
@@ -7,24 +11,17 @@ def check_parens_balance(str)
     if char == ")"
       top = stack.pop
       if top.nil? && i != last_index
-        puts "#{i},#{last_index}, #{stack} "
         bad_index = i
       end
     end
 
-    if i == last_index
-      if !stack.empty? || char  == "("
-        bad_index = i
-      end
+    if i == last_index && !stack.empty?
+      bad_index = stack[1]
     end
 
     break unless bad_index.nil?
-    stack << char if char == "("
+    stack << [char, i] if char == "("
   end
 
-  if !bad_index.nil?
-    return bad_index
-  else
-    return true
-  end
+  return [bad_index.nil?, bad_index]
 end
